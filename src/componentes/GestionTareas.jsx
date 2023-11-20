@@ -4,64 +4,64 @@ import Tarea from "./Tarea";
 import "../estilos/gestionTareas.css";
 
 function GestionTareas() {
-  const [tareas, setTareas] = useState([]);
+    const [tareas, setTareas] = useState([]);
 
-  // Cargar tareas desde el localStorage cuando el componente se monta
-  useEffect(() => {
-    const storedTareas = JSON.parse(localStorage.getItem("tareas")) || [];
-    setTareas(storedTareas);
-  }, []);
+    // Cargar tareas desde el localStorage cuando el componente se monta
+    useEffect(() => {
+        const storedTareas = JSON.parse(localStorage.getItem("tareas")) || [];
+        setTareas(storedTareas);
+    }, []);
 
-  const almacenaLasTareas = (tarea) => {
-    if (tarea.texto.trim()) {
-      tarea.texto = tarea.texto.trim();
+    const almacenaLasTareas = (tarea) => {
+        if (tarea.texto.trim()) {
+            tarea.texto = tarea.texto.trim();
 
-      const storedTareas = JSON.parse(localStorage.getItem("tareas")) || [];
-      const nuevaTarea = [tarea, ...storedTareas];
+            const storedTareas = JSON.parse(localStorage.getItem("tareas")) || [];
+            const nuevaTarea = [tarea, ...storedTareas];
 
-  
-      localStorage.setItem("tareas", JSON.stringify(nuevaTarea));
 
-      setTareas(nuevaTarea);
-    } else {
-      alert("Tarea vacía invalida");
-    }
-  };
+            localStorage.setItem("tareas", JSON.stringify(nuevaTarea));
+            setTareas(nuevaTarea);
 
-  const eliminarTarea = (id) => {
-    const listaDeTareasActualizadas = tareas.filter((tarea) => tarea.id !== id);
-    setTareas(listaDeTareasActualizadas);
+        } else {
+            alert("Tarea vacía invalida");
+        }
+    };
 
-    // Actualizar el localStorage después de eliminar una tarea
-    localStorage.setItem("tareas", JSON.stringify(listaDeTareasActualizadas));
-  };
+    const eliminarTarea = (id) => {
+        const listaDeTareasActualizadas = tareas.filter((tarea) => tarea.id !== id);
+        setTareas(listaDeTareasActualizadas);
 
-  const modificarTarea = (id) => {
-    const nuevoTexto = prompt("Ingrese el nuevo texto:");
-    setTareas((tareas) =>
-      tareas.map((tarea) => (tarea.id === id ? { ...tarea, texto: nuevoTexto } : tarea))
+        // Actualizar el localStorage después de eliminar una tarea
+        localStorage.setItem("tareas", JSON.stringify(listaDeTareasActualizadas));
+    };
+
+    const modificarTarea = (id) => {
+        const nuevoTexto = prompt("Ingrese el nuevo texto:");
+        setTareas((tareas) =>
+            tareas.map((tarea) => (tarea.id === id ? { ...tarea, texto: nuevoTexto } : tarea))
+        );
+
+        // Actualizar el localStorage después de modificar una tarea
+        localStorage.setItem("tareas", JSON.stringify(tareas));
+    };
+
+    return (
+        <div className="gestionTareas">
+            <TareaFormulario almacenaLasTareas={almacenaLasTareas} />
+            <pre className="listaDeTareas">
+                {tareas.map((tarea) => (
+                    <Tarea
+                        key={tarea.id}
+                        id={tarea.id}
+                        texto={tarea.texto}
+                        eliminarTarea={eliminarTarea}
+                        modificarTarea={modificarTarea}
+                    />
+                ))}
+            </pre>
+        </div>
     );
-
-    // Actualizar el localStorage después de modificar una tarea
-    localStorage.setItem("tareas", JSON.stringify(tareas));
-  };
-
-  return (
-    <div className="gestionTareas">
-      <TareaFormulario almacenaLasTareas={almacenaLasTareas} />
-      <pre className="listaDeTareas">
-        {tareas.map((tarea) => (
-          <Tarea
-            key={tarea.id}
-            id={tarea.id}
-            texto={tarea.texto}
-            eliminarTarea={eliminarTarea}
-            modificarTarea={modificarTarea}
-          />
-        ))}
-      </pre>
-    </div>
-  );
 }
 
 export default GestionTareas;
