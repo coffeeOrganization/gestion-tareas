@@ -72,10 +72,11 @@
   flex-wrap: wrap;
   gap: 8px;
 }
-.tarea > .icono{
+.tareas > .icono{
   grid-area: icono;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .tareas > .icono > .iconoEliminar{
   color: red;

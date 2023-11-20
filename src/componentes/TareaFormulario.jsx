@@ -25,7 +25,7 @@ function TareaFormulario({ almacenaLasTareas }) {
                 onChange={gestionInputTarea}></textarea>
             <button
                 className="buttonGuardar"
-                type="sumbit">Guardad</button>
+                type="sumbit">Guardar</button>
         </form>
     );
 }
