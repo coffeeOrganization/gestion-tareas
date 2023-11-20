@@ -1,0 +1,21 @@
+.App {
+  height: 100vh;
+  background-color: #f3eae8;
+  display: grid;
+  grid:
+    "header" auto
+    "body" 1fr
+    / 1fr;
+}
+
+header { 
+  grid-area: header;
+  display: grid;
+  place-items: center;
+}
+.body { 
+  grid-area: body; 
+  background-color: #f3eae8;
+  display: flex;
+  justify-content: center;
+}
